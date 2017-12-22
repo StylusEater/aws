@@ -1,0 +1,18 @@
+{
+  "records":
+    [
+        {"type": "A", "source": "flytlog.net", "destination": "209.208.28.100" },
+        {"type": "A", "source": "api.flytlog.net", "destination": "209.208.28.128" },
+        {"type": "A", "source": "www.flytlog.net", "destination": "209.208.28.128" },
+        {"type": "CNAME", "source": "blog.flytlog.net", "destination": "flytlog.svbtle.com" },
+        {"type": "CNAME", "source": "mail.flytlog.net", "destination": "ghs.googlehosted.com" },
+        {"type": "CNAME", "source": "cdn.flytlog.net", "destination": "flytlog.runbymanyllc.netdna-cdn.com" },
+
+        {"type": "MX", "source": "flytlog.net.",
+                "destination": [{"Value": "1 ASPMX.L.GOOGLE.COM."},
+                                 {"Value": "5 ALT1.ASPMX.L.GOOGLE.COM."},
+                                 {"Value": "5 ALT2.ASPMX.L.GOOGLE.COM."},
+                                 {"Value": "10 ALT3.ASPMX.L.GOOGLE.COM."},
+                                 {"Value": "10 ALT4.ASPMX.L.GOOGLE.COM."}]}
+    ]
+}

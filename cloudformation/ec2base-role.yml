@@ -1,0 +1,91 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: 'Creates ec2 base role and policy'
+Parameters:
+  environmentName:
+    Type: 'String'
+    Description: 'Account environment name (rbm, etc..)'
+    Default: 'xxx'
+
+Resources:
+  # Create the  IAM Role
+  ec2BaseRole:
+    Type: 'AWS::IAM::Role'
+    Properties:
+      AssumeRolePolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+          -
+            Effect: "Allow"
+            Principal:
+              Service:
+                - "ec2.amazonaws.com"
+            Action:
+              - "sts:AssumeRole"
+      ManagedPolicyArns:
+          - Ref: 'ec2CloudWatchPolicy'
+          - Ref: 'ec2TagsPolicy'
+      RoleName: !Join [ '', [!Ref environmentName, '-ec2-base-role']]
+
+  ec2BaseInstanceProfile:
+    Type: "AWS::IAM::InstanceProfile"
+    Properties:
+      Path: "/"
+      Roles:
+        -
+          Ref: "ec2BaseRole"
+      InstanceProfileName: !Join [ '', [!Ref environmentName, '-ec2-base-profile']]
+
+# Create IAM Managed Policy for the role
+  ec2CloudWatchPolicy:
+    Type: 'AWS::IAM::ManagedPolicy'
+    Properties:
+      Description:  'EC2 Cloud Watch Managed Policy'
+      ManagedPolicyName: !Join [ '', [!Ref environmentName, '-cwl-logging-policy']]
+      PolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+          -
+            Effect: 'Allow'
+            Resource: 'arn:aws:logs:*:*:*'
+            Action:
+                - logs:CreateLogGroup
+                - logs:CreateLogStream
+                - logs:PutLogEvents
+                - logs:DescribeLogStreams
+  ec2TagsPolicy:
+    Type: 'AWS::IAM::ManagedPolicy'
+    Properties:
+      Description:  'EC2 Describe-Tags Managed Policy'
+      ManagedPolicyName: !Join [ '', [!Ref environmentName, '-ec2-tags-policy']]
+      PolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+          -
+            Effect: 'Allow'
+            Resource: '*'
+            Action:
+                - ec2:Describe*
+                - ec2:CreateTags
+
+Outputs:
+  outEc2BaseRoleName:
+    Description: 'ec2 base role name'
+    Value: !Ref 'ec2BaseRole'
+    Export:
+      Name: !Sub "${AWS::StackName}-ec2BaseRole"
+  outEc2BaseInstanceProfile:
+    Description: 'ec2 base instance profile name'
+    Value: !Ref 'ec2BaseInstanceProfile'
+    Export:
+      Name: !Sub "${AWS::StackName}-ec2BaseInstanceProfile"
+  outEc2CloudWatchPolicyName:
+    Description: 'ec2 CloudWatch policy name'
+    Value: !Ref 'ec2CloudWatchPolicy'
+    Export:
+      Name: !Sub "${AWS::StackName}-ec2CloudWatchPolicy"
+  outEc2TagsPolicyName:
+    Description: 'ec2 tags policy name'
+    Value: !Ref 'ec2TagsPolicy'
+    Export:
+      Name: !Sub "${AWS::StackName}-ec2TagsPolicy"
+  

@@ -1,0 +1,21 @@
+{
+  "records":
+    [
+        {"type": "A", "source": "oktud.com", "destination": "66.228.44.41" },
+        {"type": "A", "source": "www.oktud.com", "destination": "66.228.44.41" },
+        {"type": "A", "source": "mec.oktud.com", "destination": "66.228.44.41" },
+        {"type": "CNAME", "source": "blog.oktud.com", "destination": "data-farmer.blogspot.com" },
+        {"type": "CNAME", "source": "mail.oktud.com", "destination": "ghs.googlehosted.com" },
+        {"type": "CNAME", "source": "cdn.oktud.com", "destination": "oktud.runbymanyllc.netdna-cdn.com" },
+
+        {"type": "MX", "source": "oktud.com.",
+                "destination": [{"Value": "1 ASPMX.L.GOOGLE.COM."},
+                                 {"Value": "5 ALT1.ASPMX.L.GOOGLE.COM."},
+                                 {"Value": "5 ALT2.ASPMX.L.GOOGLE.COM."},
+                                 {"Value": "10 ALT3.ASPMX.L.GOOGLE.COM."},
+                                 {"Value": "10 ALT4.ASPMX.L.GOOGLE.COM."}]},
+
+        {"type": "TXT", "source": "oktud.com.", "destination": "\"v=spf1 a mx\""}
+
+    ]
+}
